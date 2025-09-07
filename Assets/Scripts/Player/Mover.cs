@@ -10,7 +10,7 @@ public class Mover : MonoBehaviour
     private float _minRotation = -45f;
     private float _rotaionSpeed = -50f;
     private float _halfCircule = 360f;
-    private int _jumpForce = 200;
+    private int _jumpForce = 300;
 
     private void Awake()
     {

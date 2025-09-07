@@ -1,9 +1,8 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : PoolableObject
 {
-    private float _minXPosition = -4f;
-    private float _maxXPosition = 4f;
     public event System.Action<Bullet> ReadyForRelease;
 
     public Rigidbody2D Rigidbody { get; private set; }
@@ -13,9 +12,9 @@ public class Bullet : PoolableObject
         Rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (transform.position.x < _minXPosition || transform.position.x > _maxXPosition)
+        if (collision.gameObject.GetComponent<Wall>())
         {
             ReadyForRelease?.Invoke(this);
         }

@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBulletSpawner : Spawner<Bullet>
 {
     [SerializeField] private BulletsSpawnPoint _spawnPoint;
+    [SerializeField] private Sprite _sprite;
 
-    protected override void ActionOnGet(Bullet bullet)
+    private int _double = 2;
+
+    protected override void GetAction(Bullet bullet)
     {
         PooledObjects.Add(bullet);
         bullet.transform.position = _spawnPoint.transform.position;
         bullet.gameObject.SetActive(true);
-        bullet.Rigidbody.velocity = new Vector3(1, 0, 0);
+        bullet.transform.rotation = _sprite.transform.rotation;
+        bullet.Rigidbody.velocity = new Vector3(1 - bullet.transform.rotation.z * _double, bullet.transform.rotation.z * _double, 0);
         bullet.ReadyForRelease += Release;
     }
 
@@ -19,11 +21,11 @@ public class PlayerBulletSpawner : Spawner<Bullet>
     {
         PooledObjects.Remove(bullet);
         bullet.ReadyForRelease -= Release;
-        _objects.Release(bullet);
+        Objects.Release(bullet);
     }
 
     public void SpawnBullet()
     {
-        _objects.Get();
+        Objects.Get();
     }
 }

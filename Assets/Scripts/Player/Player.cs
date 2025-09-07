@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Mover _mover;
@@ -39,6 +40,6 @@ public class Player : MonoBehaviour
     {
         transform.position = Vector3.zero;
         _rigidbody.velocity = Vector3.zero;
-        _rigidbody.rotation = 0;
+        _rigidbody.angularVelocity = 0;
     }
 }

@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : PoolableObject
 {
     [SerializeField] private BulletsSpawnPoint _bulletSpawnPoint;
 
     private  EnemyBulletSpawner _bulletSpawner;
-    private float _xPositionForRealise = -4f;
     private int _timeForShot = 3;
     private Rigidbody2D _rigidbody;
     public event Action<Enemy> ReadyForRelease;
@@ -20,20 +20,12 @@ public class Enemy : PoolableObject
 
     private void Start()
     {
-        StartCoroutine(TimeUp());
-    }
-
-    private void Update()
-    {
-        if (transform.position.x <= _xPositionForRealise)
-        {
-            ReadyForRelease?.Invoke(this);
-        }
+        StartCoroutine(Waiting());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Bullet>())
+        if (collision.gameObject.GetComponent<Bullet>() || collision.gameObject.GetComponent<Wall>())
         {
             ReadyForRelease?.Invoke(this);
         }
@@ -46,7 +38,7 @@ public class Enemy : PoolableObject
         _bulletSpawner = bulletSpawner;
     }
 
-    private IEnumerator TimeUp()
+    private IEnumerator Waiting()
     {
         var wait = new WaitForSeconds(_timeForShot);
 

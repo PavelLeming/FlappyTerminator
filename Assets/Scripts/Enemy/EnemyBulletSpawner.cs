@@ -6,7 +6,7 @@ public class EnemyBulletSpawner : Spawner<Bullet>
 {
     private float _speed = -1.5f;
 
-    protected override void ActionOnGet(Bullet bullet)
+    protected override void GetAction(Bullet bullet)
     {
         PooledObjects.Add(bullet);
         bullet.gameObject.SetActive(true);
@@ -18,12 +18,11 @@ public class EnemyBulletSpawner : Spawner<Bullet>
     {
         PooledObjects.Remove(bullet);
         bullet.ReadyForRelease -= Release;
-        _objects.Release(bullet);
+        Objects.Release(bullet);
     }
 
     public Bullet SpawnBullet()
     {
-        Bullet bullet = _objects.Get();
-        return bullet;
+        return Objects.Get();
     }
 }

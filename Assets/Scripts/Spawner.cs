@@ -12,16 +12,16 @@ public class Spawner<T> : MonoBehaviour where T : PoolableObject
     private int _poolCapacity = 10;
     private int _maxPoolCapacity = 10;
 
-    protected ObjectPool<T> _objects;
+    protected ObjectPool<T> Objects;
     protected List<T> PooledObjects = new List<T>();
 
     private void Awake()
     {
-        _objects = new ObjectPool<T>(
+        Objects = new ObjectPool<T>(
             createFunc: () => Instantiate(_object),
-            actionOnGet: (poolableObject) => ActionOnGet(poolableObject),
+            actionOnGet: (poolableObject) => GetAction(poolableObject),
             actionOnRelease: (poolableObject) => poolableObject.gameObject.SetActive(false),
-            actionOnDestroy: (poolableObject) => Destroy(poolableObject),
+            actionOnDestroy: (poolableObject) => Destroy(poolableObject.gameObject),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
             maxSize: _maxPoolCapacity
@@ -39,7 +39,7 @@ public class Spawner<T> : MonoBehaviour where T : PoolableObject
         }
     }
 
-    protected virtual void ActionOnGet(T poolableObject)
+    protected virtual void GetAction(T poolableObject)
     {
 
     }

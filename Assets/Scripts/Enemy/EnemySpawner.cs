@@ -12,7 +12,7 @@ public class EnemySpawner : Spawner<Enemy>
     private float _maxYposition = 4f;
     private float _spawnTimer = 3f;
 
-    protected override void ActionOnGet(Enemy enemy)
+    protected override void GetAction(Enemy enemy)
     {
         PooledObjects.Add(enemy);
         enemy.gameObject.SetActive(true);
@@ -24,7 +24,7 @@ public class EnemySpawner : Spawner<Enemy>
     {
         PooledObjects.Remove(enemy);
         enemy.ReadyForRelease -= Release;
-        _objects.Release(enemy);
+        Objects.Release(enemy);
     }
 
     private void Start()
@@ -38,7 +38,7 @@ public class EnemySpawner : Spawner<Enemy>
 
         while (enabled)
         {
-            _objects.Get();
+            Objects.Get();
 
 
             yield return wait;

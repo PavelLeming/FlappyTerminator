@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerBulletSpawner : Spawner<Bullet>
 {
     [SerializeField] private BulletsSpawnPoint _spawnPoint;
-    [SerializeField] private Sprite _sprite;
+    [SerializeField] private Player _player;
 
     private int _double = 2;
 
@@ -12,7 +12,7 @@ public class PlayerBulletSpawner : Spawner<Bullet>
         PooledObjects.Add(bullet);
         bullet.transform.position = _spawnPoint.transform.position;
         bullet.gameObject.SetActive(true);
-        bullet.transform.rotation = _sprite.transform.rotation;
+        bullet.transform.rotation = _player.transform.rotation;
         bullet.Rigidbody.velocity = new Vector3(1 - bullet.transform.rotation.z * _double, bullet.transform.rotation.z * _double, 0);
         bullet.ReadyForRelease += Release;
     }

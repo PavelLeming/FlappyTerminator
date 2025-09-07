@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Spawner<T> : MonoBehaviour where T : PoolableObject
+public class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 {
     [SerializeField] private T _object;
 
